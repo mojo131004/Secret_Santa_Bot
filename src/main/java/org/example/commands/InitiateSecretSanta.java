@@ -15,7 +15,7 @@ public class InitiateSecretSanta extends ListenerAdapter {
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        if (event.getName().equals("start")) {
+        if (event.getName().equals("wichteln")) {
             event.deferReply(true).queue();
 
             event.getGuild().loadMembers().onSuccess(members -> {
