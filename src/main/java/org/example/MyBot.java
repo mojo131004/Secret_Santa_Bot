@@ -15,13 +15,15 @@ public class MyBot extends ListenerAdapter {
         JDA jda = JDABuilder.createDefault(token,
                         GatewayIntent.GUILD_MESSAGES,
                         GatewayIntent.GUILD_MEMBERS,
-                        GatewayIntent.MESSAGE_CONTENT)
+                        GatewayIntent.MESSAGE_CONTENT,
+                        GatewayIntent.GUILD_VOICE_STATES)
                 .addEventListeners(
                         new InitiateSecretSanta(),
                         new PingCommand(),
                         new CountdownCommand(),
                         new InviteCommand(),
-                        new QuoteCommand()
+                        new QuoteCommand(),
+                        new PlayCommand()
                 )
                 .build()
                 .awaitReady();
@@ -31,7 +33,10 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("ping", "Antwortet mit der Latenz"),
                 Commands.slash("countdown", "Zeigt, wie viele Tage bis Weihnachten übrig sind"),
                 Commands.slash("invite", "Zeigt den Invite-Link für den Bot"),
-                Commands.slash("quote", "Holt ein zufälliges Zitat aus dem Quotes-Channel")
+                Commands.slash("quote", "Holt ein zufälliges Zitat aus dem Quotes-Channel"),
+                Commands.slash("play_youtube", "Spielt ein YouTube-Video im Voice-Channel")
+                        .addOption(net.dv8tion.jda.api.interactions.commands.OptionType.STRING, "url", "YouTube-URL", true)
+
         ).queue();
     }
 }
