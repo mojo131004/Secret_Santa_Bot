@@ -23,7 +23,9 @@ public class MyBot extends ListenerAdapter {
                         new CountdownCommand(),
                         new InviteCommand(),
                         new QuoteCommand(),
-                        new PlayCommand()
+                       // new PlayCommand(),
+                        new CoinFlipCommand(),
+                        new GuessNumberCommand()
                 )
                 .build()
                 .awaitReady();
@@ -34,8 +36,10 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("countdown", "Zeigt, wie viele Tage bis Weihnachten übrig sind"),
                 Commands.slash("invite", "Zeigt den Invite-Link für den Bot"),
                 Commands.slash("quote", "Holt ein zufälliges Zitat aus dem Quotes-Channel"),
-                Commands.slash("play_youtube", "Spielt ein YouTube-Video im Voice-Channel")
-                        .addOption(net.dv8tion.jda.api.interactions.commands.OptionType.STRING, "url", "YouTube-URL", true)
+               // Commands.slash("play_youtube", "Spielt ein YouTube-Video im Voice-Channel")
+               //           .addOption(net.dv8tion.jda.api.interactions.commands.OptionType.STRING, "url", "YouTube-URL", true),
+                Commands.slash("coinflip", "Wirf eine Münze für schwierige entscheidungen"),
+                Commands.slash("guess", "Rate eine Zahl zwichen 1 und 100")
 
         ).queue();
     }
