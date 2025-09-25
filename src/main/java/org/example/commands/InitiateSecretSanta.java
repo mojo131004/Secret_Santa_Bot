@@ -16,9 +16,12 @@ public class InitiateSecretSanta extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (event.getName().equals("wichteln")) {
-            event.deferReply(true).queue();
+            event.reply("Netter Versuch aber bis zu Weihnachten ist es noch zu lange")
+                    .setEphemeral(true)
+                    .queue();
+            //event.deferReply(true).queue();
 
-            event.getGuild().loadMembers().onSuccess(members -> {
+            /*event.getGuild().loadMembers().onSuccess(members -> {
                 List<SelectOption> options = new ArrayList<>();
                 for (Member m : members) {
                     if (!m.getUser().isBot()) {
@@ -134,6 +137,7 @@ public class InitiateSecretSanta extends ListenerAdapter {
                     ". Bitte überprüft eure Datenschutzeinstellungen.";
         }
 
-        event.getHook().editOriginal(confirmation).queue();
+        event.getHook().editOriginal(confirmation).queue();*/
+        }
     }
 }
