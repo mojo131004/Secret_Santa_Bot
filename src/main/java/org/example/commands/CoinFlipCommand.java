@@ -12,7 +12,7 @@ public class CoinFlipCommand extends ListenerAdapter {
 	public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
 		if (event.getName().equals("coinflip")) {
 			event.reply("Ausgang des Münzwurfs wird ermittelt 🪙")
-					.setEphemeral(true)
+					.setEphemeral(false)
 					.queue();
 			try {
 				Thread.sleep(3000);
@@ -22,7 +22,7 @@ public class CoinFlipCommand extends ListenerAdapter {
 
 			int randomNum = rand.nextInt(2);
 			String result = (randomNum == 0) ? "Das Ergebnis ist Kopf 🪙🗣️" : "Das Ergebnis ist Zahl 🪙🔢";
-			event.getHook().sendMessage(result).setEphemeral(true).queue();
+			event.getHook().sendMessage(result).setEphemeral(false).queue();
 		}
 	}
 }

@@ -3,6 +3,7 @@ package org.example;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.example.commands.*;
@@ -23,7 +24,7 @@ public class MyBot extends ListenerAdapter {
                         new CountdownCommand(),
                         new InviteCommand(),
                         new QuoteCommand(),
-                       // new PlayCommand(),
+                        new DiceCommand(),
                         new CoinFlipCommand(),
                         new GuessNumberCommand()
                 )
@@ -36,8 +37,8 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("countdown", "Zeigt, wie viele Tage bis Weihnachten übrig sind"),
                 Commands.slash("invite", "Zeigt den Invite-Link für den Bot"),
                 Commands.slash("quote", "Holt ein zufälliges Zitat aus dem Quotes-Channel"),
-               // Commands.slash("play_youtube", "Spielt ein YouTube-Video im Voice-Channel")
-               //           .addOption(net.dv8tion.jda.api.interactions.commands.OptionType.STRING, "url", "YouTube-URL", true),
+                Commands.slash("würfel", "Wirft einen würfel mit einer selbstebstimmten seitenzahl")
+                         .addOption(OptionType.INTEGER, "sides", "Würfel Seiten", true),
                 Commands.slash("coinflip", "Wirf eine Münze für schwierige entscheidungen"),
                 Commands.slash("guess", "Rate eine Zahl zwichen 1 und 100")
 
