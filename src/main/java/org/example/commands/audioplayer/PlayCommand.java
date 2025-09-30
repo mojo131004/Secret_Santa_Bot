@@ -1,4 +1,4 @@
-package org.example.commands;
+/*package org.example.commands;
 
 import com.sedmelluq.discord.lavaplayer.player.*;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
@@ -81,3 +81,4 @@ public class PlayCommand extends ListenerAdapter {
                 .addOption(net.dv8tion.jda.api.interactions.commands.OptionType.STRING, "url", "YouTube-URL", true);
     }
 }
+*/
