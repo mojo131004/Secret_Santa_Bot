@@ -9,33 +9,51 @@ import java.util.stream.Collectors;
 
 public class TopTalkersCommand extends ListenerAdapter {
 
-	@Override
-	public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-		if (!event.getName().equals("toptalkers")) return;
+    private final MessageTrackerService tracker;
 
-		Map<String, Integer> counts = MessageTracker.messageCount;
+    public TopTalkersCommand(MessageTrackerService tracker) {
+        this.tracker = tracker;
+    }
 
-		if (counts.isEmpty()) {
-			event.reply("📭 Noch keine Nachrichten gezählt!").queue();
-			return;
-		}
+    @Override
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
+        if (!event.getName().equals("toptalkers")) return;
 
-		List<Map.Entry<String, Integer>> topUsers = counts.entrySet().stream()
-				.sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-				.limit(5)
-				.collect(Collectors.toList());
+        Map<String, Integer> counts = tracker.getMessageCount();
 
-		StringBuilder reply = new StringBuilder("🏆 **Top Chatter**:\n");
-		for (int i = 0; i < topUsers.size(); i++) {
-			String userId = topUsers.get(i).getKey();
-			int count = topUsers.get(i).getValue();
-			Member member = event.getGuild().getMemberById(userId);
-			String name = member != null ? member.getEffectiveName() : "Unbekannt";
+        if (counts.isEmpty()) {
+            event.reply("📭 Noch keine Nachrichten gezählt!").queue();
+            return;
+        }
 
-			reply.append("**").append(i + 1).append(". ").append(name)
-					.append("** – ").append(count).append(" Nachrichten\n");
-		}
+        List<Map.Entry<String, Integer>> topUsers = counts.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .limit(5)
+                .collect(Collectors.toList());
 
-		event.reply(reply.toString()).queue();
-	}
+        StringBuilder reply = new StringBuilder("🏆 **Top Chatter**:\n");
+        for (int i = 0; i < topUsers.size(); i++) {
+            String userId = topUsers.get(i).getKey();
+            int count = topUsers.get(i).getValue();
+            Member member = event.getGuild().getMemberById(userId);
+            String name;
+
+            if (member != null) {
+                name = member.getEffectiveName();
+            } else {
+                try {
+                    member = event.getGuild().retrieveMemberById(userId).complete();
+                    name = member.getEffectiveName();
+                } catch (Exception e) {
+                    name = "Unbekannt (" + userId + ")";
+                }
+            }
+
+
+            reply.append("**").append(i + 1).append(". ").append(name)
+                    .append("** – ").append(count).append(" Nachrichten\n");
+        }
+
+        event.reply(reply.toString()).queue();
+    }
 }
