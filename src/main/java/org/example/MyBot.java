@@ -9,15 +9,17 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.example.commands.*;
 import org.example.commands.MessageCounter.ActivityHeatmapCommand;
-import org.example.commands.MessageCounter.MessageTrackerService;
-import org.example.commands.MessageCounter.TopTalkersCommand;
+import org.example.commands.roasts.RoastCommand;
+import org.example.commands.roasts.RoastService;
 
 public class MyBot extends ListenerAdapter {
 
     public static void main(String[] args) throws Exception {
         String token = "MTQxNzU3NzY4NDc3ODg3Njk4OA.GNQaEK.LW9HIOA4RdLSUvtBd1ZFV9M7KdMI-f5MQK3xJQ";
 
-        MessageTrackerService tracker = new MessageTrackerService();
+        //MessageTrackerService tracker = new MessageTrackerService();
+
+        RoastService roastService = new RoastService();
 
         JDA jda = JDABuilder.createDefault(token,
                         GatewayIntent.GUILD_MESSAGES,
@@ -35,14 +37,15 @@ public class MyBot extends ListenerAdapter {
                         new DiceCommand(),
                         new CoinFlipCommand(),
                         new GuessNumberCommand(),
-                        new TopTalkersCommand(tracker),
+                        //new TopTalkersCommand(tracker),
                         new RouletteCommand(),
+                        new RoastCommand(roastService),
                         new ActivityHeatmapCommand()
                 )
                 .build()
                 .awaitReady();
 
-        tracker.initializeHistory(jda);
+        //tracker.initializeHistory(jda);
 
         jda.updateCommands().addCommands(
                 Commands.slash("wichteln", "Wähle bis zu 4 Personen für den Wichtel"),
@@ -55,7 +58,9 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("coinflip", "Wirf eine Münze für schwierige entscheidungen"),
                 Commands.slash("guess", "Rate eine Zahl zwischen 1 und 100"),
                 Commands.slash("roulette", "Jemand zufälliges im VC wird für 10 sekunden stummgeschaltet"),
-                Commands.slash("toptalkers", "wer hat die meisten nachrichten geschrieben?"),
+                Commands.slash("roastsomeone", "Roaste einen User wie eine (vegane) Wurst aufm Grill")
+                        .addOption(OptionType.USER, "user", "Wen willst du roasten?", true),
+                //Commands.slash("toptalkers", "wer hat die meisten nachrichten geschrieben?"),
                 Commands.slash("emojiwars", "Welcher emoji wird hier am meisten benutzt?"),
                 Commands.slash("activityheatmap","Um wie viel Uhr ist der Server am aktivsten?")
 
