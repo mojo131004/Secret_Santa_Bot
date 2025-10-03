@@ -1,0 +1,11 @@
+{
+  "userId": "123456789012345678",
+  "currentScene": "start",
+  "flags": {
+    "hasKey": false,
+    "isInjured": false,
+    "metStranger": false
+  },
+  "inventory": ["Taschenlampe"],
+  "choices": ["openedDoor", "ignoredNoise"]
+}

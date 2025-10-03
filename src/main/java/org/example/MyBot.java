@@ -9,6 +9,8 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.example.commands.*;
 import org.example.commands.MessageCounter.ActivityHeatmapCommand;
+import org.example.commands.StoryMode.PlayCommand;
+import org.example.commands.StoryMode.Saving.StoryResetCommand;
 import org.example.commands.roasts.RoastCommand;
 import org.example.commands.roasts.RoastService;
 
@@ -40,7 +42,10 @@ public class MyBot extends ListenerAdapter {
                         //new TopTalkersCommand(tracker),
                         new RouletteCommand(),
                         new RoastCommand(roastService),
-                        new ActivityHeatmapCommand()
+                        new ActivityHeatmapCommand(),
+                        new PlayCommand(),
+                        new StoryResetCommand()
+
                 )
                 .build()
                 .awaitReady();
@@ -62,7 +67,9 @@ public class MyBot extends ListenerAdapter {
                         .addOption(OptionType.USER, "user", "Wen willst du roasten?", true),
                 //Commands.slash("toptalkers", "wer hat die meisten nachrichten geschrieben?"),
                 Commands.slash("emojiwars", "Welcher emoji wird hier am meisten benutzt?"),
-                Commands.slash("activityheatmap","Um wie viel Uhr ist der Server am aktivsten?")
+                Commands.slash("activityheatmap","Um wie viel Uhr ist der Server am aktivsten?"),
+                Commands.slash("storymode", "Starte dein Abenteuer"),
+                Commands.slash("storyreset", "Setzt deinen Story-Spielstand zurück")
 
         ).queue();
     }

@@ -15,7 +15,7 @@ public class QuoteCommand extends ListenerAdapter {
     private static final long QUOTES_CHANNEL_ID = 855887631645016115L;
 
     // Deine Keywords
-    private static final List<String> KEYWORDS = List.of("Mo:", "Lea:", "Hannah", "Flo:", "Ty");
+    private static final List<String> KEYWORDS = List.of("Mo", "Lea", "Hannah", "Flo", "Ty");
 
     // Cache für gefundene Zitate
     private final List<Message> cachedQuotes = new ArrayList<>();
