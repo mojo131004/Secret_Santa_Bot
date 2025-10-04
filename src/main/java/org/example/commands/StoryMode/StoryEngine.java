@@ -369,9 +369,66 @@ public class StoryEngine {
                         "'So einfach lasse ich mich nicht fertig machen. Ich will deinen Fortschritt schon sehen.'",
                         List.of(
                                 new StoryOption("Dem Flur folgen", "followHall"),
-                                new StoryOption("Tür schließen", "closeDoor")
+                                new StoryOption("Nachfragen was er meint", "askOldMan")
                         )
                 );
+
+            case "askOldMan":
+                return new StoryScene("Du fragst den alten Mann war er meint worauf er nur erwidert, 'Sie verfolgen dich... so wie ich'",
+                        List.of(
+                                new StoryOption("Dem Flur folgen", "followHall")
+                        )
+                );
+
+            case "followHall":
+                return new StoryScene("Der Gang ist lang, viel zu lang. Wände aus grauem Stein, nackt und still." +
+                        "Jeder Schritt hallt, als wärst du der Einzige, der je hier gegangen ist.",
+                        List.of(
+                                new StoryOption("Dem Flur weiter folgen", "followHallFurther")
+                        )
+                );
+
+            case "followHallFurther":
+                return new StoryScene("Du gehst voran. Die Luft ist trocken, staubig – so alt, dass du fast schmecken kannst," +
+                        " wie lange hier niemand war. Nur dann findest du eine Aufgabe, entweder du gibst einen Code ein," +
+                        " oder du musst eine challenge schaffen",
+                        List.of(
+                                new StoryOption("Code eingeben", "enterCode"),
+                                new StoryOption("Challenge versuchen", "challenge")
+                        )
+                );
+
+            case "followHallFurtherHappy":
+                return new StoryScene("Etwas in dir bleibt ruhig. Der Flur ist still, doch er bedrängt dich nicht – er beobachtet nur." +
+                        "Irgendwo in der Ferne flackert ein warmes Licht. Vielleicht das Ende. Vielleicht nur Hoffnung.",
+                        List.of(
+                                new StoryOption("Nach dem Licht schauen", "lookAfterLight")
+                        )
+                );
+
+
+
+            case "followHallFurtherHappyScared":
+                return new StoryScene("Der Flur wirkt eng und dunkel. Du willst dich nicht umdrehen. " +
+                        "Etwas zischt durch die Luft – ein Flüstern, zu nah, um Einbildung zu sein.",
+                        List.of(
+                                new StoryOption("Rennen", "run"),
+                                new StoryOption("Zuhören", "listenToVoices")
+                        )
+                );
+
+
+
+            case "followHallFurtherScream":
+                return new StoryScene("Dein Schrei aus dem ersten Raum hallt auf einmal auf dich zurück Als du weitergehst, siehst du an der Wand " +
+                        "deine eigene Silhouette – doch sie bewegt sich nicht im selben Takt.",
+                        List.of(
+                                new StoryOption("Rennen", "run"),
+                                new StoryOption("Zuhören", "listenToVoices")
+                        )
+                );
+
+
 
             default:
                 return new StoryScene("❌ Ungültige Szene-ID: `" + sceneId + "`", List.of());

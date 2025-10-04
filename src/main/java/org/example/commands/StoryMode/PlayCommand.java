@@ -123,6 +123,10 @@ public class PlayCommand extends ListenerAdapter {
                 state.addItem("FirstDoorKey");
             }
 
+            if (nextScene.equals("clickBlackButton") && !state.getChoices().contains("clickBlackButton")) {
+                state.getChoices().add("knowsCombination");
+            }
+
             // ✅ Tür öffnen nur mit Schlüssel
             if (nextScene.equals("openDoor") && !state.hasItem("FirstDoorKey")) {
                 nextScene = "doorLocked";
@@ -148,8 +152,22 @@ public class PlayCommand extends ListenerAdapter {
                 nextScene = "closeDoorFailed";
             }
 
-            if (nextScene.equals("stareTwo") && !state.getChoices().contains("stareTwo")) {
+            if (nextScene.equals("screamOldMan") && !state.getChoices().contains("screamOldMan") ||
+                    nextScene.equals("askOldMan") && !state.getChoices().contains("askOldMan")) {
                 state.getChoices().add("scared");
+            }
+
+            if (nextScene.equals("openDoor") && state.getChoices().contains("happy") && !state.getChoices().contains("scared")) {
+                nextScene = "followHallFurtherHappy";
+            }
+
+            if (nextScene.equals("openDoor") && state.getChoices().contains("scared")) {
+                nextScene = "followHallFurtherHappyScared";
+            }
+
+
+            if (nextScene.equals("openDoor") && state.getChoices().contains("scream")) {
+                nextScene = "followHallFurtherScream";
             }
 
             state.setCurrentScene(nextScene);
