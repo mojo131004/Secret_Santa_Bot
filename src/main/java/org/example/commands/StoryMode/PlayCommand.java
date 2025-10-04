@@ -140,6 +140,18 @@ public class PlayCommand extends ListenerAdapter {
                 state.addItem("map");
             }
 
+            if (nextScene.equals("stareTwo") && !state.getChoices().contains("stareTwo")) {
+                state.getChoices().add("happy");
+            }
+
+            if (nextScene.equals("closeDoor") && !state.getChoices().contains("happy")) {
+                nextScene = "closeDoorFailed";
+            }
+
+            if (nextScene.equals("stareTwo") && !state.getChoices().contains("stareTwo")) {
+                state.getChoices().add("scared");
+            }
+
             state.setCurrentScene(nextScene);
             saveManager.save(state);
 

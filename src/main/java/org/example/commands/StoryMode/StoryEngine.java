@@ -42,7 +42,7 @@ public class StoryEngine {
                         List.of(
                                 new StoryOption("Schlüssel doch nehmen", "takeKey"),
                                 new StoryOption("Weiter umschauen", "lookaround"),
-                                new StoryOption("Zur Tür gehen", "door")
+                                new StoryOption("Zur Tür gehen", "doorThree")
                         )
                 );
 
@@ -121,6 +121,17 @@ public class StoryEngine {
                         )
                 );
 
+            case "doorThree":
+                return new StoryScene(
+                        "Die Tür ist verschlossen. Du hörst ein Geräusch dahinter.",
+                        List.of(
+                                new StoryOption("Anklopfen", "knock"),
+                                new StoryOption("Schlüssel doch nehmen", "takeKey")
+                        )
+                );
+
+
+
             case "doorLocked":
                 return new StoryScene(
                         "Du versuchst die Tür zu öffnen, aber sie ist verschlossen. Du brauchst einen Schlüssel.",
@@ -160,6 +171,26 @@ public class StoryEngine {
             case "keyroom":
                 return new StoryScene(
                         "Du betrittst einen kleinen Raum. Ein alter Mann sitzt dort und starrt dich an.",
+                        List.of(
+                                new StoryOption("Mit ihm sprechen", "talkToOldMan"),
+                                new StoryOption("Den Raum durchsuchen", "searchRoom"),
+                                new StoryOption("Zurückstarren", "stare")
+                        )
+                );
+
+            case "stare":
+                return new StoryScene(
+                        "Der alte man start dich nun noch mehr an",
+                        List.of(
+                                new StoryOption("Mit ihm sprechen", "talkToOldMan"),
+                                new StoryOption("Den Raum durchsuchen", "searchRoom"),
+                                new StoryOption("Ebenfalls krasser zurückstarren", "stareTwo")
+                        )
+                );
+
+            case "stareTwo":
+                return new StoryScene(
+                        "'Ich mag dich' sagt der alte man nun auf einmal und du fühlst dich besser",
                         List.of(
                                 new StoryOption("Mit ihm sprechen", "talkToOldMan"),
                                 new StoryOption("Den Raum durchsuchen", "searchRoom")
@@ -216,15 +247,6 @@ public class StoryEngine {
                         "Du befragst den alten Mann erneut, welcher dir diesmal sagt 'Du.. du bist der nächste.'",
                         List.of(
                                 new StoryOption("Den Raum durchsuchen", "searchRoom")
-                        )
-                );
-
-            case "leaveRoom":
-                return new StoryScene("Hier endet die Story erstmal",
-                        //"Du verlässt den Raum. Der Flur ist leer und still.",
-                        List.of(
-                               // new StoryOption("Dem Flur folgen", "followHall"),
-                                //new StoryOption("Zurück zum Start", "start")
                         )
                 );
 
@@ -315,6 +337,39 @@ public class StoryEngine {
                         "Du hast dir das Buch genommen.",
                         List.of(
                                 new StoryOption("Raum verlassen", "leaveRoom")
+                        )
+                );
+
+            case "leaveRoom":
+                return new StoryScene("Du verlässt den Raum. Der Flur ist leer und still.",
+                        List.of(
+                                new StoryOption("Dem Flur folgen", "followHall"),
+                                new StoryOption("Tür schließen", "closeDoor")
+                        )
+                );
+
+            case "closeDoor":
+                return new StoryScene("Du schließt die Tür hinter und bist nun wieder alleine. Auf einmal hörst du" +
+                        " schmerzerfülltes schreien hinter der Tür... die Tür lässt sich nicht mehr öffnen.",
+                        List.of(
+                                new StoryOption("Dem Flur folgen", "followHall"),
+                                new StoryOption("Nach dem alten Mann rufen", "screamOldMann")
+                        )
+                );
+
+            case "screamOldMann":
+                return new StoryScene("Du rufst zur Tür nach dem alten Mann... keine Antwort",
+                        List.of(
+                                new StoryOption("Dem Flur folgen", "followHall")
+                        )
+                );
+
+            case "closeDoorFailed":
+                return new StoryScene("Du möchtest grade die Tür schließen doch der alte Mann verhindert das" +
+                        "'So einfach lasse ich mich nicht fertig machen. Ich will deinen Fortschritt schon sehen.'",
+                        List.of(
+                                new StoryOption("Dem Flur folgen", "followHall"),
+                                new StoryOption("Tür schließen", "closeDoor")
                         )
                 );
 
