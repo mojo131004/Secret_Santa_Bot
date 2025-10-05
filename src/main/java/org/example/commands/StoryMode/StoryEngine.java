@@ -271,7 +271,7 @@ public class StoryEngine {
             case "libDead":
                 return new StoryScene(
                         "Das Schreien hat, was auch immer die Wände zum Vibrieren gebracht hat aufmerksam auf dich gemacht. " +
-                                "Du hörst Schritte und merkst wie das Bücherregal langsam umkippt und dich für immer unter sich begräbt.",
+                                "Du hörst Schritte und merkst wie das Bücherregal langsam umkippt und dich für immer unter sich begräbt. \n\nBad End1",
                         List.of() // ✅ Keine Optionen = Story-Ende
                 );
 
@@ -279,7 +279,8 @@ public class StoryEngine {
                 return new StoryScene(
                         "Als du dich auf den Weg begeben wolltest dich schnell zu verstecken bemerkst du, dass sich die Wände nur dort " +
                                 "vibrieren wo du stehst... du überlegst und stellst fest das es mit dem Schrei aus dem anfangsraum zu tun hat." +
-                                "Dir bleibt nichts anderes übrig als dein Schicksal hinzunehmen und mit einem Augenblick von den Wänden zerdrückt zu werden.",
+                                "Dir bleibt nichts anderes übrig als dein Schicksal hinzunehmen und mit einem Augenblick von den Wänden zerdrückt zu werden. " +
+                                "\n\nBad End2",
                         List.of() // ✅ Keine Optionen = Story-Ende
                 );
 
@@ -326,7 +327,7 @@ public class StoryEngine {
 
             case "takeBook":
                 return new StoryScene(
-                        "Du hast dir die Karte genommen.",
+                        "Du hast dir das Buch genommen.",
                         List.of(
                                 new StoryOption("Raum verlassen", "leaveRoom")
                         )
@@ -365,7 +366,7 @@ public class StoryEngine {
                 );
 
             case "closeDoorFailed":
-                return new StoryScene("Du möchtest grade die Tür schließen doch der alte Mann verhindert das" +
+                return new StoryScene("Du möchtest grade die Tür schließen doch der alte Mann verhindert das " +
                         "'So einfach lasse ich mich nicht fertig machen. Ich will deinen Fortschritt schon sehen.'",
                         List.of(
                                 new StoryOption("Dem Flur folgen", "followHall"),
@@ -391,7 +392,7 @@ public class StoryEngine {
             case "followHallFurther":
                 return new StoryScene("Du gehst voran. Die Luft ist trocken, staubig – so alt, dass du fast schmecken kannst," +
                         " wie lange hier niemand war. Nur dann findest du eine Aufgabe, entweder du gibst einen Code ein," +
-                        " oder du musst eine challenge schaffen",
+                        " oder du musst eine Challenge schaffen",
                         List.of(
                                 new StoryOption("Code eingeben", "enterCode"),
                                 new StoryOption("Challenge versuchen", "challenge")
@@ -406,8 +407,6 @@ public class StoryEngine {
                         )
                 );
 
-
-
             case "followHallFurtherHappyScared":
                 return new StoryScene("Der Flur wirkt eng und dunkel. Du willst dich nicht umdrehen. " +
                         "Etwas zischt durch die Luft – ein Flüstern, zu nah, um Einbildung zu sein.",
@@ -417,15 +416,125 @@ public class StoryEngine {
                         )
                 );
 
-
-
             case "followHallFurtherScream":
                 return new StoryScene("Dein Schrei aus dem ersten Raum hallt auf einmal auf dich zurück Als du weitergehst, siehst du an der Wand " +
                         "deine eigene Silhouette – doch sie bewegt sich nicht im selben Takt.",
                         List.of(
                                 new StoryOption("Rennen", "run"),
-                                new StoryOption("Zuhören", "listenToVoices")
+                                new StoryOption("Ignorieren und weitergehen", "followHallFurther")
                         )
+                );
+
+            case "followHallFurtherHappyScaredScream":
+                return new StoryScene("Du fühlst dich gleichzeitig am Leben und verloren. Jeder Schritt ist ein Zittern, " +
+                        "doch du gehst weiter, weil du endlich spürst, dass du existierst.",
+                        List.of(
+                                new StoryOption("Nochmal schreien", "screamTwice"),
+                                new StoryOption("Mit Stolz weiter gehen", "followHallFurther")
+                        )
+                );
+
+            case "screamTwice":
+                return new StoryScene("Du Schreist dir nochmal alle sorgen raus und fühlst dich lebendig.",
+                        List.of(
+                                new StoryOption("Mit Stolz weiter gehen", "followHallFurther")
+                        )
+                );
+
+            case "followHallFurtherHappyScream":
+                return new StoryScene("Es erscheint ein Lächeln auf deinen Lippen. Die Luft vibriert, als würde der ganze Ort deinen " +
+                        "Laut mittragen. Etwas in dir hat begriffen, dass der Schrei aus dem ersten Raum kein Zeichen von Schwäche ist, " +
+                        "sondern von Leben. Du drehst dich einmal im Kreis, lachst, atmest – und zum ersten Mal fühlst du dich nicht " +
+                        "beobachtet, sondern willkommen.",
+                        List.of(
+                                new StoryOption("weiter gehen", "followHallFurther")
+                        )
+                );
+
+            case "enterCode":
+                return new StoryScene("Bitte gib die erste Ziffer des Code ein, wenn du diesen denn weißt",
+                        List.of(
+                                new StoryOption("0", "wrongNumber"),
+                                new StoryOption("1", "wrongNumber"),
+                                new StoryOption("2", "wrongNumber"),
+                                new StoryOption("3", "wrongNumber"),
+                                new StoryOption("4", "wrongNumber"),
+                                new StoryOption("5", "firstRight"),
+                                new StoryOption("6", "wrongNumber"),
+                                new StoryOption("7", "wrongNumber"),
+                                new StoryOption("8", "wrongNumber"),
+                                new StoryOption("9", "wrongNumber")
+                        )
+                );
+
+            case "firstRight":
+                return new StoryScene("Bitte gib die zweite Nummer des Code ein, wenn du diesen denn weißt",
+                        List.of(
+                                new StoryOption("0", "wrongNumber"),
+                                new StoryOption("1", "wrongNumber"),
+                                new StoryOption("2", "secondRight"),
+                                new StoryOption("3", "wrongNumber"),
+                                new StoryOption("4", "wrongNumber"),
+                                new StoryOption("5", "wrongNumber"),
+                                new StoryOption("6", "wrongNumber"),
+                                new StoryOption("7", "wrongNumber"),
+                                new StoryOption("8", "wrongNumber"),
+                                new StoryOption("9", "wrongNumber")
+                        )
+                );
+
+            case "secondRight":
+                return new StoryScene("Bitte gib die dritte Nummer des Code ein, wenn du diesen denn weißt",
+                        List.of(
+                                new StoryOption("0", "thirdRight"),
+                                new StoryOption("1", "wrongNumber"),
+                                new StoryOption("2", "wrongNumber"),
+                                new StoryOption("3", "wrongNumber"),
+                                new StoryOption("4", "wrongNumber"),
+                                new StoryOption("5", "wrongNumber"),
+                                new StoryOption("6", "wrongNumber"),
+                                new StoryOption("7", "wrongNumber"),
+                                new StoryOption("8", "wrongNumber"),
+                                new StoryOption("9", "wrongNumber")
+                        )
+                );
+
+            case "wrongNumber":
+                return new StoryScene("Du gibst die Nummer für den Code ein auf einmal wird alles schwarz... du bleibst stehen, bis du " +
+                        "plötzlich einen schmerz in deinem Magen spürst... Das Licht geht an und du fühlst was dieser Schmerz ist." +
+                        "Es ist ein Speer direkt in deinen Magen geschleudert... Du wirst ohnmächtig. \n\nBad End 3",
+                        List.of()
+                );
+
+            case "thirdRight":
+                return new StoryScene("Du gibst die letzte Zahl richtig ein und gehst in den Raum rein und stellst fest das in diesem Raum " +
+                        "eine weitere Tür auf dich wartet diesmal ist es aber anders, du fühlst dich förmlich zu ihr hingezogen. Was nun?",
+                        List.of(
+                                new StoryOption("versuchen zu wiederstehen", "resistance"),
+                                new StoryOption("durch gehen", "endOne")
+                        )
+                );
+
+
+            case "cheater":
+                return new StoryScene("Du gibst die letzte Zahl richtig ein und gehst in den Raum rein und stellst fest das in diesem Raum " +
+                        "der alte Mann bereits auf dich Wartet 'Ich mag keine Schummler... woher weißt du die Nummer...' Bevor du bemerken kannst " +
+                        "was gerade passiert wird dir schwarz vor Augen. Bad End 4",
+                        List.of()
+                );
+
+            case "endOne":
+                return new StoryScene("Die Tür öffnet sich, und kalte Luft strömt herein. Du lächelst – du hast es geschafft. " +
+                        "Doch als du hinaustrittst, siehst du den langen Gang erneut vor dir. Nur diesmal steht am anderen Ende eine " +
+                        "Gestalt. Sie sieht aus wie du. Sie schreit um Hilfe in einem Regal.\n\n Good End 1",
+                        List.of()
+                );
+
+            case "resistance":
+                return new StoryScene("Du versuchst zu wiederstehen, bis du merkst der alte Mann ist zurück welcher zu dir sagt" +
+                        "'Du bist anscheinend noch nicht bereit einer von den anderen zu werden' noch bevor du den alten Mann befragen kannst," +
+                        "verlässt er den Raum welcher sich nun schnell mit Gas füllt und dich Ohnmächtig auf dem Boden zurücklässt. \n\nBad End 5",
+                        List.of()
                 );
 
 

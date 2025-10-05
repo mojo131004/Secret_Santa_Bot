@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import org.example.commands.StoryMode.Saving.StorySaveManager;
 import org.example.commands.StoryMode.Saving.StoryScene;
@@ -39,8 +40,15 @@ public class PlayCommand extends ListenerAdapter {
 
             if (!buttons.isEmpty()) {
                 buttons.add(Button.danger("story_exit", "🛑 Speichern & Beenden"));
+
+                List<ActionRow> rows = new ArrayList<>();
+                for (int i = 0; i < buttons.size(); i += 5) {
+                    int end = Math.min(i + 5, buttons.size());
+                    rows.add(ActionRow.of(buttons.subList(i, end)));
+                }
+
                 event.getHook().sendMessageEmbeds(embed.build())
-                        .addActionRow(buttons.toArray(new Button[0]))
+                        .setComponents(rows)
                         .queue();
             } else {
                 event.getHook().sendMessageEmbeds(embed.build())
@@ -165,9 +173,12 @@ public class PlayCommand extends ListenerAdapter {
                 nextScene = "followHallFurtherHappyScared";
             }
 
-
             if (nextScene.equals("openDoor") && state.getChoices().contains("scream")) {
                 nextScene = "followHallFurtherScream";
+            }
+
+            if (nextScene.equals("thirdRight") && !state.getChoices().contains("knowsCombination")) {
+                nextScene = "cheater";
             }
 
             state.setCurrentScene(nextScene);
@@ -187,8 +198,15 @@ public class PlayCommand extends ListenerAdapter {
 
             if (!buttons.isEmpty()) {
                 buttons.add(Button.danger("story_exit", "🛑 Speichern & Beenden"));
-                event.editMessageEmbeds(embed.build())
-                        .setActionRow(buttons.toArray(new Button[0]))
+
+                List<ActionRow> rows = new ArrayList<>();
+                for (int i = 0; i < buttons.size(); i += 5) {
+                    int end = Math.min(i + 5, buttons.size());
+                    rows.add(ActionRow.of(buttons.subList(i, end)));
+                }
+
+                event.getHook().sendMessageEmbeds(embed.build())
+                        .setComponents(rows)
                         .queue();
             } else {
                 event.editMessageEmbeds(embed.build())
