@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -44,7 +45,8 @@ public class MyBot extends ListenerAdapter {
                         new RoastCommand(roastService),
                         new ActivityHeatmapCommand(),
                         new PlayCommand(),
-                        new StoryResetCommand()
+                        new StoryResetCommand(),
+                        new GayCommand()
 
                 )
                 .build()
@@ -58,7 +60,7 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("countdown", "Zeigt, wie viele Tage bis Weihnachten übrig sind"),
                 Commands.slash("invite", "Zeigt den Invite-Link für den Bot"),
                 Commands.slash("quote", "Holt ein zufälliges Zitat aus dem Quotes-Channel"),
-                Commands.slash("würfel", "Wirft einen würfel mit einer selbstebstimmten seitenzahl")
+                Commands.slash("würfel", "Wirft einen würfel mit einer selbstbestimmten seitenzahl")
                          .addOption(OptionType.INTEGER, "sides", "Würfel Seiten", true),
                 Commands.slash("coinflip", "Wirf eine Münze für schwierige entscheidungen"),
                 Commands.slash("guess", "Rate eine Zahl zwischen 1 und 100"),
@@ -69,7 +71,11 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("emojiwars", "Welcher emoji wird hier am meisten benutzt?"),
                 Commands.slash("activityheatmap","Um wie viel Uhr ist der Server am aktivsten?"),
                 Commands.slash("storymode", "Starte dein Abenteuer"),
-                Commands.slash("storyreset", "Setzt deinen Story-Spielstand zurück")
+                Commands.slash("storyreset", "Setzt deinen Story-Spielstand zurück"),
+                Commands.slash("gayrate", "Wie Gay ist ein Nutzer?")
+                        .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
+                Commands.slash("kultiviertehurensohn", "Wie sehr bist du ein kultivierter Hurensohn?")
+                        .addOption(OptionType.USER, "user", "Wen willst du testen?", false)
 
         ).queue();
     }

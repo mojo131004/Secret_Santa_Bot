@@ -452,52 +452,53 @@ public class StoryEngine {
                 );
 
             case "enterCode":
-                return new StoryScene("Bitte gib die erste Ziffer des Code ein, wenn du diesen denn weißt",
+                return new StoryScene("Bitte gib die erste Ziffer des Codes ein, wenn du diesen denn weißt",
                         List.of(
-                                new StoryOption("0", "wrongNumber"),
-                                new StoryOption("1", "wrongNumber"),
-                                new StoryOption("2", "wrongNumber"),
-                                new StoryOption("3", "wrongNumber"),
-                                new StoryOption("4", "wrongNumber"),
+                                new StoryOption("0", "wrongNumber_0"),
+                                new StoryOption("1", "wrongNumber_1"),
+                                new StoryOption("2", "wrongNumber_2"),
+                                new StoryOption("3", "wrongNumber_3"),
+                                new StoryOption("4", "wrongNumber_4"),
                                 new StoryOption("5", "firstRight"),
-                                new StoryOption("6", "wrongNumber"),
-                                new StoryOption("7", "wrongNumber"),
-                                new StoryOption("8", "wrongNumber"),
-                                new StoryOption("9", "wrongNumber")
+                                new StoryOption("6", "wrongNumber_6"),
+                                new StoryOption("7", "wrongNumber_7"),
+                                new StoryOption("8", "wrongNumber_8"),
+                                new StoryOption("9", "wrongNumber_9")
                         )
                 );
 
             case "firstRight":
-                return new StoryScene("Bitte gib die zweite Nummer des Code ein, wenn du diesen denn weißt",
+                return new StoryScene("Bitte gib die zweite Ziffer des Codes ein, wenn du diesen denn weißt",
                         List.of(
-                                new StoryOption("0", "wrongNumber"),
-                                new StoryOption("1", "wrongNumber"),
+                                new StoryOption("0", "wrongNumber_0"),
+                                new StoryOption("1", "wrongNumber_1"),
                                 new StoryOption("2", "secondRight"),
-                                new StoryOption("3", "wrongNumber"),
-                                new StoryOption("4", "wrongNumber"),
-                                new StoryOption("5", "wrongNumber"),
-                                new StoryOption("6", "wrongNumber"),
-                                new StoryOption("7", "wrongNumber"),
-                                new StoryOption("8", "wrongNumber"),
-                                new StoryOption("9", "wrongNumber")
+                                new StoryOption("3", "wrongNumber_3"),
+                                new StoryOption("4", "wrongNumber_4"),
+                                new StoryOption("5", "wrongNumber_5"),
+                                new StoryOption("6", "wrongNumber_6"),
+                                new StoryOption("7", "wrongNumber_7"),
+                                new StoryOption("8", "wrongNumber_8"),
+                                new StoryOption("9", "wrongNumber_9")
                         )
                 );
 
             case "secondRight":
-                return new StoryScene("Bitte gib die dritte Nummer des Code ein, wenn du diesen denn weißt",
+                return new StoryScene("Bitte gib die dritte Ziffer des Codes ein, wenn du diesen denn weißt",
                         List.of(
                                 new StoryOption("0", "thirdRight"),
-                                new StoryOption("1", "wrongNumber"),
-                                new StoryOption("2", "wrongNumber"),
-                                new StoryOption("3", "wrongNumber"),
-                                new StoryOption("4", "wrongNumber"),
-                                new StoryOption("5", "wrongNumber"),
-                                new StoryOption("6", "wrongNumber"),
-                                new StoryOption("7", "wrongNumber"),
-                                new StoryOption("8", "wrongNumber"),
-                                new StoryOption("9", "wrongNumber")
+                                new StoryOption("1", "wrongNumber_1"),
+                                new StoryOption("2", "wrongNumber_2"),
+                                new StoryOption("3", "wrongNumber_3"),
+                                new StoryOption("4", "wrongNumber_4"),
+                                new StoryOption("5", "wrongNumber_5"),
+                                new StoryOption("6", "wrongNumber_6"),
+                                new StoryOption("7", "wrongNumber_7"),
+                                new StoryOption("8", "wrongNumber_8"),
+                                new StoryOption("9", "wrongNumber_9")
                         )
                 );
+
 
             case "wrongNumber":
                 return new StoryScene("Du gibst die Nummer für den Code ein auf einmal wird alles schwarz... du bleibst stehen, bis du " +
@@ -534,6 +535,18 @@ public class StoryEngine {
                 return new StoryScene("Du versuchst zu wiederstehen, bis du merkst der alte Mann ist zurück welcher zu dir sagt" +
                         "'Du bist anscheinend noch nicht bereit einer von den anderen zu werden' noch bevor du den alten Mann befragen kannst," +
                         "verlässt er den Raum welcher sich nun schnell mit Gas füllt und dich Ohnmächtig auf dem Boden zurücklässt. \n\nBad End 5",
+                        List.of()
+                );
+
+            case "run":
+                return new StoryScene("Du rennst und rennst und rennst, bis du irgendwann bemerkst das du zwar den Wind noch spürst, " +
+                        "jedoch von Unten, da du nicht mehr rennst sondern fällst. \n\nBad End 5",
+                        List.of()
+                );
+
+            case "listenToVoices":
+                return new StoryScene("Du rennst und rennst und rennst, bis du irgendwann bemerkst das du zwar den Wind noch spürst, " +
+                        "jedoch von Unten, da du nicht mehr rennst sondern fällst. \n\nBad End 5",
                         List.of()
                 );
 

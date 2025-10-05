@@ -87,11 +87,9 @@ public class PlayCommand extends ListenerAdapter {
         }
 
         if (id.equals("story_restart")) {
-            // ✅ Datei löschen
             File file = new File("saves/" + userId + ".json");
             if (file.exists()) file.delete();
 
-            // ✅ Neuen Spielstand erzeugen
             StoryState state = new StoryState(userId, "start");
             saveManager.save(state);
 
@@ -109,8 +107,14 @@ public class PlayCommand extends ListenerAdapter {
 
             buttons.add(Button.danger("story_exit", "🛑 Speichern & Beenden"));
 
+            List<ActionRow> rows = new ArrayList<>();
+            for (int i = 0; i < buttons.size(); i += 5) {
+                int end = Math.min(i + 5, buttons.size());
+                rows.add(ActionRow.of(buttons.subList(i, end)));
+            }
+
             event.editMessageEmbeds(embed.build())
-                    .setActionRow(buttons.toArray(new Button[0]))
+                    .setComponents(rows)
                     .queue();
             return;
         }
@@ -121,12 +125,16 @@ public class PlayCommand extends ListenerAdapter {
             String nextScene = id.split(":")[1];
             StoryState state = saveManager.load(userId);
 
-            // ✅ Schreien als versteckte Choice speichern
+            // ✅ Normalisierung eindeutiger IDs
+            if (nextScene.startsWith("wrongNumber_")) {
+                nextScene = "wrongNumber";
+            }
+
+            // ✅ Choice- und Inventar-Logik
             if (nextScene.equals("scream") && !state.getChoices().contains("scream")) {
                 state.getChoices().add("scream");
             }
 
-            // ✅ Schlüssel aufnehmen
             if (nextScene.equals("takeKey")) {
                 state.addItem("FirstDoorKey");
             }
@@ -135,7 +143,6 @@ public class PlayCommand extends ListenerAdapter {
                 state.getChoices().add("knowsCombination");
             }
 
-            // ✅ Tür öffnen nur mit Schlüssel
             if (nextScene.equals("openDoor") && !state.hasItem("FirstDoorKey")) {
                 nextScene = "doorLocked";
             }
@@ -160,8 +167,8 @@ public class PlayCommand extends ListenerAdapter {
                 nextScene = "closeDoorFailed";
             }
 
-            if (nextScene.equals("screamOldMan") && !state.getChoices().contains("screamOldMan") ||
-                    nextScene.equals("askOldMan") && !state.getChoices().contains("askOldMan")) {
+            if ((nextScene.equals("screamOldMan") && !state.getChoices().contains("screamOldMan")) ||
+                    (nextScene.equals("askOldMan") && !state.getChoices().contains("askOldMan"))) {
                 state.getChoices().add("scared");
             }
 
@@ -205,7 +212,7 @@ public class PlayCommand extends ListenerAdapter {
                     rows.add(ActionRow.of(buttons.subList(i, end)));
                 }
 
-                event.getHook().sendMessageEmbeds(embed.build())
+                event.editMessageEmbeds(embed.build())
                         .setComponents(rows)
                         .queue();
             } else {
