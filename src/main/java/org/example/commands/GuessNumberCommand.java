@@ -44,7 +44,10 @@ public class GuessNumberCommand extends ListenerAdapter {
 		} else if (session.attempts >= 5) {
 			sessions.remove(userId);
 			event.getChannel().sendMessage("😢 Leider verloren, " + event.getAuthor().getName() + ". Die richtige Zahl war " + session.secretNumber + ".").queue();
-		} else {
+		} else if (guess >= 101) {
+            event.getChannel().sendMessage( "Diese nummer ist über 100").queue();
+            session.attempts--;
+        } else {
 			String hint = (guess < session.secretNumber) ? "🔼 Zu niedrig!" : "🔽 Zu hoch!";
 			int remaining = 5 - session.attempts;
 			event.getChannel().sendMessage(hint + " Du hast noch " + remaining + " Versuch(e), " + event.getAuthor().getName() + ".").queue();

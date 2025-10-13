@@ -2,6 +2,7 @@ package org.example.commands;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -21,24 +22,30 @@ public class QuoteCommand extends ListenerAdapter {
     private final List<Message> cachedQuotes = new ArrayList<>();
     private final Random random = new Random();
 
+    /**
+     * Wird beim Bot-Start ausgeführt, sobald die Guild bereit ist.
+     * Lädt automatisch die Zitate in den Cache.
+     */
+    @Override
+    public void onGuildReady(GuildReadyEvent event) {
+        TextChannel channel = event.getGuild().getTextChannelById(QUOTES_CHANNEL_ID);
+        if (channel != null) {
+            loadQuotes(channel);
+        }
+    }
+
+    /**
+     * Slash-Command für /quote
+     */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (!event.getName().equals("quote")) return;
 
-        TextChannel channel = event.getGuild().getTextChannelById(QUOTES_CHANNEL_ID);
-        if (channel == null) {
-            event.reply("❌ Quotes-Channel nicht gefunden!").setEphemeral(true).queue();
-            return;
-        }
-
-        // Falls Cache noch leer ist → laden
         if (cachedQuotes.isEmpty()) {
-            event.reply("⏳ Lade Zitate... bitte nochmal versuchen in ein paar Sekunden.").setEphemeral(true).queue();
-            loadQuotes(channel);
+            event.reply("⏳ Zitate werden noch geladen... bitte versuch es gleich nochmal.").setEphemeral(true).queue();
             return;
         }
 
-        // Zufälliges Zitat aus Cache
         Message randomMsg = cachedQuotes.get(random.nextInt(cachedQuotes.size()));
         event.reply("💬 Zufälliges Zitat:\n\n" + randomMsg.getContentDisplay()).queue();
     }
@@ -53,7 +60,7 @@ public class QuoteCommand extends ListenerAdapter {
             if (KEYWORDS.stream().anyMatch(content::contains)) {
                 cachedQuotes.add(msg);
             }
-            return true; // true = weiter durchgehen
+            return true;
         }).thenRun(() -> {
             System.out.println("✅ Quotes geladen: " + cachedQuotes.size() + " Nachrichten im Cache.");
         });
