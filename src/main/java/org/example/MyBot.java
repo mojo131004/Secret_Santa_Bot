@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -32,7 +31,6 @@ public class MyBot extends ListenerAdapter {
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .addEventListeners(
-                        new InitiateSecretSanta(),
                         new PingCommand(),
                         new CountdownCommand(),
                         new InviteCommand(),
@@ -55,7 +53,6 @@ public class MyBot extends ListenerAdapter {
         //tracker.initializeHistory(jda);
 
         jda.updateCommands().addCommands(
-                Commands.slash("wichteln", "Wähle bis zu 4 Personen für den Wichtel"),
                 Commands.slash("ping", "Antwortet mit der Latenz"),
                 Commands.slash("countdown", "Zeigt, wie viele Tage bis Weihnachten übrig sind"),
                 Commands.slash("invite", "Zeigt den Invite-Link für den Bot"),
@@ -75,6 +72,8 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("gayrate", "Wie Gay ist ein Nutzer?")
                         .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
                 Commands.slash("kultiviertehurensohn", "Wie sehr bist du ein kultivierter Hurensohn?")
+                        .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
+                Commands.slash("gemeinimeini", "Wie sehr bist du ein Gemeini meini?")
                         .addOption(OptionType.USER, "user", "Wen willst du testen?", false)
 
         ).queue();

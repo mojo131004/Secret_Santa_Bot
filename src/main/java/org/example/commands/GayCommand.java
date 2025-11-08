@@ -12,7 +12,7 @@ public class GayCommand extends ListenerAdapter {
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         String name = event.getName();
 
-        if (!name.equals("gayrate") && !name.equals("kultiviertehurensohn")) return;
+        if (!name.equals("gayrate") && !name.equals("kultiviertehurensohn") && !name.equals("gemeinimeini")) return;
 
         User target = event.getOption("user") != null
                 ? event.getOption("user").getAsUser()
@@ -23,8 +23,11 @@ public class GayCommand extends ListenerAdapter {
         if (name.equals("gayrate")) {
             event.reply(target.getAsMention() + " ist zu " + percentage + "% GAY 🌈")
                     .queue();
-        } else {
+        } else if (name.equals("kultiviertehurensohn")) {
             event.reply(target.getAsMention() + " ist zu " + percentage + "% ein kultivierter Hurensohn 😌")
+                    .queue();
+        }else {
+            event.reply(target.getAsMention() + " ist zu " + percentage + "% ein Gemeini meini 😌")
                     .queue();
         }
     }
