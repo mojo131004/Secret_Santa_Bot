@@ -44,7 +44,8 @@ public class MyBot extends ListenerAdapter {
                         new ActivityHeatmapCommand(),
                         new PlayCommand(),
                         new StoryResetCommand(),
-                        new GayCommand()
+                        new GayCommand(),
+                        new PurgeCommand()
 
                 )
                 .build()
@@ -53,6 +54,7 @@ public class MyBot extends ListenerAdapter {
         //tracker.initializeHistory(jda);
 
         jda.updateCommands().addCommands(
+                Commands.slash("wichteln", "Wähle bis zu 4 Personen für den Wichtel"),
                 Commands.slash("ping", "Antwortet mit der Latenz"),
                 Commands.slash("countdown", "Zeigt, wie viele Tage bis Weihnachten übrig sind"),
                 Commands.slash("invite", "Zeigt den Invite-Link für den Bot"),
@@ -72,6 +74,9 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("gayrate", "Wie Gay ist ein Nutzer?")
                         .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
                 Commands.slash("kultiviertehurensohn", "Wie sehr bist du ein kultivierter Hurensohn?")
+                        .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
+                Commands.slash("purge", "löscht nachrichten")
+                        .addOption(OptionType.INTEGER, "amount", "Anzahl der zu löschenden Nachrichten", true)
                         .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
                 Commands.slash("gemeinimeini", "Wie sehr bist du ein Gemeini meini?")
                         .addOption(OptionType.USER, "user", "Wen willst du testen?", false)
