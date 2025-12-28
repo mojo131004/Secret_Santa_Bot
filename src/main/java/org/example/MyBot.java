@@ -14,14 +14,18 @@ import org.example.commands.StoryMode.Saving.StoryResetCommand;
 import org.example.commands.roasts.RoastCommand;
 import org.example.commands.roasts.RoastService;
 
+// WAVELENGTH IMPORTS
+import org.example.commands.wavelength.*;
+
 public class MyBot extends ListenerAdapter {
 
     public static void main(String[] args) throws Exception {
         String token = "MTQxNzU3NzY4NDc3ODg3Njk4OA.GNQaEK.LW9HIOA4RdLSUvtBd1ZFV9M7KdMI-f5MQK3xJQ";
 
-        //MessageTrackerService tracker = new MessageTrackerService();
-
         RoastService roastService = new RoastService();
+
+        // WAVELENGTH MANAGER
+        WavelengthSessionManager wavelengthManager = new WavelengthSessionManager();
 
         JDA jda = JDABuilder.createDefault(token,
                         GatewayIntent.GUILD_MESSAGES,
@@ -38,20 +42,26 @@ public class MyBot extends ListenerAdapter {
                         new DiceCommand(),
                         new CoinFlipCommand(),
                         new GuessNumberCommand(),
-                        //new TopTalkersCommand(tracker),
                         new RouletteCommand(),
                         new RoastCommand(roastService),
                         new ActivityHeatmapCommand(),
                         new PlayCommand(),
                         new StoryResetCommand(),
                         new GayCommand(),
-                        new PurgeCommand()
+                        new PurgeCommand(),
 
+                        // WAVELENGTH COMMANDS
+                        new Wavelength2Players(wavelengthManager),
+                        new Wavelength3Players(wavelengthManager),
+                        new Wavelength4Players(wavelengthManager),
+                        new Wavelength4PlayersTeams(wavelengthManager),
+                        new WavelengthStop(wavelengthManager),
+
+                        // WAVELENGTH LISTENER
+                        new WavelengthMessageListener(wavelengthManager)
                 )
                 .build()
                 .awaitReady();
-
-        //tracker.initializeHistory(jda);
 
         jda.updateCommands().addCommands(
                 Commands.slash("wichteln", "Wähle bis zu 4 Personen für den Wichtel"),
@@ -60,13 +70,12 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("invite", "Zeigt den Invite-Link für den Bot"),
                 Commands.slash("quote", "Holt ein zufälliges Zitat aus dem Quotes-Channel"),
                 Commands.slash("würfel", "Wirft einen würfel mit einer selbstbestimmten seitenzahl")
-                         .addOption(OptionType.INTEGER, "sides", "Würfel Seiten", true),
+                        .addOption(OptionType.INTEGER, "sides", "Würfel Seiten", true),
                 Commands.slash("coinflip", "Wirf eine Münze für schwierige entscheidungen"),
                 Commands.slash("guess", "Rate eine Zahl zwischen 1 und 100"),
                 Commands.slash("roulette", "Jemand zufälliges im VC wird für 10 sekunden stummgeschaltet"),
                 Commands.slash("roastsomeone", "Roaste einen User wie eine (vegane) Wurst aufm Grill")
                         .addOption(OptionType.USER, "user", "Wen willst du roasten?", true),
-                //Commands.slash("toptalkers", "wer hat die meisten nachrichten geschrieben?"),
                 Commands.slash("emojiwars", "Welcher emoji wird hier am meisten benutzt?"),
                 Commands.slash("activityheatmap","Um wie viel Uhr ist der Server am aktivsten?"),
                 Commands.slash("storymode", "Starte dein Abenteuer"),
@@ -79,8 +88,14 @@ public class MyBot extends ListenerAdapter {
                         .addOption(OptionType.INTEGER, "amount", "Anzahl der zu löschenden Nachrichten", true)
                         .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
                 Commands.slash("gemeinimeini", "Wie sehr bist du ein Gemeini meini?")
-                        .addOption(OptionType.USER, "user", "Wen willst du testen?", false)
+                        .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
 
-        ).queue();
+                // WAVELENGTH COMMANDS
+                Commands.slash("wavelength2players", "Starte Wavelength mit 2 Spielern"),
+                Commands.slash("wavelength3players", "Starte Wavelength mit 3 Spielern"),
+                Commands.slash("wavelength4players", "Starte Wavelength mit 4 Spielern (Free For All)"),
+                Commands.slash("wavelength4playersteams", "Starte Wavelength mit 4 Spielern (2v2 Teams)"),
+                Commands.slash("wavelengthstop", "Bricht das aktuelle Wavelength-Spiel ab")
+                ).queue();
     }
 }
