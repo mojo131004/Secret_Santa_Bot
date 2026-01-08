@@ -1,0 +1,87 @@
+package org.example;
+
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import org.example.commands.*;
+import org.example.commands.MessageCounter.ActivityHeatmapCommand;
+import org.example.commands.StoryMode.PlayCommand;
+import org.example.commands.StoryMode.Saving.StoryResetCommand;
+
+// WAVELENGTH IMPORTS
+import org.example.commands.wavelength.*;
+
+public class MyBot extends ListenerAdapter {
+
+    public static void main(String[] args) throws Exception {
+        String token = System.getenv("DISCORD_TOKEN");
+
+        // WAVELENGTH MANAGER
+        WavelengthSessionManager wavelengthManager = new WavelengthSessionManager();
+
+        JDA jda = JDABuilder.createDefault(token,
+                        GatewayIntent.GUILD_MESSAGES,
+                        GatewayIntent.GUILD_MEMBERS,
+                        GatewayIntent.MESSAGE_CONTENT,
+                        GatewayIntent.GUILD_VOICE_STATES)
+                .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                .setMemberCachePolicy(MemberCachePolicy.ALL)
+                .addEventListeners(
+                        new PingCommand(),
+                        new CountdownCommand(),
+                        new InviteCommand(),
+                        new QuoteCommand(),
+                        new DiceCommand(),
+                        new CoinFlipCommand(),
+                        new GuessNumberCommand(),
+                        new RouletteCommand(),
+                        new ActivityHeatmapCommand(),
+                        new PlayCommand(),
+                        new StoryResetCommand(),
+                        new PurgeCommand(),
+
+                        // WAVELENGTH COMMANDS
+                        new Wavelength2Players(wavelengthManager),
+                        new Wavelength3Players(wavelengthManager),
+                        new Wavelength4Players(wavelengthManager),
+                        new Wavelength4PlayersTeams(wavelengthManager),
+                        new WavelengthStop(wavelengthManager),
+
+                        // WAVELENGTH LISTENER
+                        new WavelengthMessageListener(wavelengthManager)
+                )
+                .build()
+                .awaitReady();
+
+        jda.updateCommands().addCommands(
+                Commands.slash("wichteln", "Wähle bis zu 4 Personen für den Wichtel"),
+                Commands.slash("ping", "Antwortet mit der Latenz"),
+                Commands.slash("countdown", "Zeigt, wie viele Tage bis Weihnachten übrig sind"),
+                Commands.slash("invite", "Zeigt den Invite-Link für den Bot"),
+                Commands.slash("quote", "Holt ein zufälliges Zitat aus dem Quotes-Channel"),
+                Commands.slash("würfel", "Wirft einen würfel mit einer selbstbestimmten seitenzahl")
+                        .addOption(OptionType.INTEGER, "sides", "Würfel Seiten", true),
+                Commands.slash("coinflip", "Wirf eine Münze für schwierige entscheidungen"),
+                Commands.slash("guess", "Rate eine Zahl zwischen 1 und 100"),
+                Commands.slash("roulette", "Jemand zufälliges im VC wird für 10 sekunden stummgeschaltet"),
+                Commands.slash("emojiwars", "Welcher emoji wird hier am meisten benutzt?"),
+                Commands.slash("activityheatmap","Um wie viel Uhr ist der Server am aktivsten?"),
+                Commands.slash("storymode", "Starte dein Abenteuer"),
+                Commands.slash("storyreset", "Setzt deinen Story-Spielstand zurück"),
+                Commands.slash("purge", "löscht nachrichten")
+                        .addOption(OptionType.INTEGER, "amount", "Anzahl der zu löschenden Nachrichten", true)
+                        .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
+
+                // WAVELENGTH COMMANDS
+                Commands.slash("wavelength2players", "Starte Wavelength mit 2 Spielern"),
+                Commands.slash("wavelength3players", "Starte Wavelength mit 3 Spielern"),
+                Commands.slash("wavelength4players", "Starte Wavelength mit 4 Spielern (Free For All)"),
+                Commands.slash("wavelength4playersteams", "Starte Wavelength mit 4 Spielern (2v2 Teams)"),
+                Commands.slash("wavelengthstop", "Bricht das aktuelle Wavelength-Spiel ab")
+                ).queue();
+    }
+}
