@@ -11,8 +11,6 @@ import org.example.commands.*;
 import org.example.commands.MessageCounter.ActivityHeatmapCommand;
 import org.example.commands.StoryMode.PlayCommand;
 import org.example.commands.StoryMode.Saving.StoryResetCommand;
-import org.example.commands.roasts.RoastCommand;
-import org.example.commands.roasts.RoastService;
 
 // WAVELENGTH IMPORTS
 import org.example.commands.wavelength.*;
@@ -21,8 +19,6 @@ public class MyBot extends ListenerAdapter {
 
     public static void main(String[] args) throws Exception {
         String token = System.getenv("DISCORD_TOKEN");
-
-        RoastService roastService = new RoastService();
 
         // WAVELENGTH MANAGER
         WavelengthSessionManager wavelengthManager = new WavelengthSessionManager();
@@ -43,11 +39,9 @@ public class MyBot extends ListenerAdapter {
                         new CoinFlipCommand(),
                         new GuessNumberCommand(),
                         new RouletteCommand(),
-                        new RoastCommand(roastService),
                         new ActivityHeatmapCommand(),
                         new PlayCommand(),
                         new StoryResetCommand(),
-                        new GayCommand(),
                         new PurgeCommand(),
 
                         // WAVELENGTH COMMANDS
@@ -74,20 +68,12 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("coinflip", "Wirf eine Münze für schwierige entscheidungen"),
                 Commands.slash("guess", "Rate eine Zahl zwischen 1 und 100"),
                 Commands.slash("roulette", "Jemand zufälliges im VC wird für 10 sekunden stummgeschaltet"),
-                Commands.slash("roastsomeone", "Roaste einen User wie eine (vegane) Wurst aufm Grill")
-                        .addOption(OptionType.USER, "user", "Wen willst du roasten?", true),
                 Commands.slash("emojiwars", "Welcher emoji wird hier am meisten benutzt?"),
                 Commands.slash("activityheatmap","Um wie viel Uhr ist der Server am aktivsten?"),
                 Commands.slash("storymode", "Starte dein Abenteuer"),
                 Commands.slash("storyreset", "Setzt deinen Story-Spielstand zurück"),
-                Commands.slash("gayrate", "Wie Gay ist ein Nutzer?")
-                        .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
-                Commands.slash("kultiviertehurensohn", "Wie sehr bist du ein kultivierter Hurensohn?")
-                        .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
                 Commands.slash("purge", "löscht nachrichten")
                         .addOption(OptionType.INTEGER, "amount", "Anzahl der zu löschenden Nachrichten", true)
-                        .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
-                Commands.slash("gemeinimeini", "Wie sehr bist du ein Gemeini meini?")
                         .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
 
                 // WAVELENGTH COMMANDS
