@@ -20,7 +20,7 @@ import org.example.commands.wavelength.*;
 public class MyBot extends ListenerAdapter {
 
     public static void main(String[] args) throws Exception {
-        String token = "MTQxNzU3NzY4NDc3ODg3Njk4OA.GNQaEK.LW9HIOA4RdLSUvtBd1ZFV9M7KdMI-f5MQK3xJQ";
+        String token = System.getenv("DISCORD_TOKEN");
 
         RoastService roastService = new RoastService();
 
