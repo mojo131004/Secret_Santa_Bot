@@ -6,26 +6,26 @@ import java.util.Random;
 public class WavelengthTopics {
 
 	private static final List<String> TOPICS = List.of(
-			"Scharf vs. Mild",
-			"Alt vs. Neu",
-			"Gefährlich vs. Harmlos",
-			"Teuer vs. Billig",
-			"Nerdig vs. Mainstream",
-			"Laut vs. Leise",
-			"Komplex vs. Einfach",
-			"Mutig vs. Vorsichtig",
-			"Natürlich vs. Künstlich",
-			"Modern vs. Klassisch",
-			"Freundlich vs. Unfreundlich",
-			"Cool vs. Uncool",
-			"Selten vs. Häufig",
-			"Schwer vs. Leicht",
-			"Wichtig vs. Unwichtig",
-			"Unheimlich vs. Beruhigend",
-			"Schnell vs. Langsam",
-			"Luxuriös vs. Basic",
-			"Chaotisch vs. Geordnet",
-			"Realistisch vs. Unrealistisch"
+			"Mild vs. Scharf",
+			"Neu vs. Alt",
+			"Harmlos vs. Gefährlich",
+			"Billig vs. Teuer",
+			"Mainstream vs. Nerdig",
+			"Leise vs. Laut",
+			"Einfach vs. Komplex",
+			"Vorsichtig vs. Mutig",
+			"Künstlich vs. Natürlich",
+			"Klassisch vs. Modern",
+			"Unfreundlich vs. Freundlich",
+			"Uncool vs. Cool",
+			"Häufig vs. Selten",
+			"Leicht vs. Schwer",
+			"Unwichtig vs. Wichtig",
+			"Beruhigend vs. Unheimlich",
+			"Langsam vs. Schnell",
+			"Basic vs. Luxuriös",
+			"Geordnet vs. Chaotisch",
+			"Unrealistisch vs. Realistisch"
 	);
 
 	private static final Random random = new Random();
