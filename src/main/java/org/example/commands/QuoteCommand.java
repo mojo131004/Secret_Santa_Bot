@@ -47,7 +47,12 @@ public class QuoteCommand extends ListenerAdapter {
         }
 
         Message randomMsg = cachedQuotes.get(random.nextInt(cachedQuotes.size()));
-        event.reply("💬 Zufälliges Zitat:\n\n" + randomMsg.getContentDisplay()).queue();
+        String quoteText = randomMsg.getContentDisplay();
+        String quoteLink = randomMsg.getJumpUrl();
+
+        event.reply("💬 **Zufälliges Zitat:**\n\n" +
+                quoteText + "\n\n" +
+                "🔗 [Zur Originalnachricht](" + quoteLink + ")").queue();
     }
 
     /**
