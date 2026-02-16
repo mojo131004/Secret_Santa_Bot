@@ -1,4 +1,4 @@
-package org.example.commands;
+package org.example.commands.Quotes;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;

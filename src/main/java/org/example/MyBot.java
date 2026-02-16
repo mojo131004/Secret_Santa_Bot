@@ -9,6 +9,8 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.example.commands.*;
 import org.example.commands.MessageCounter.ActivityHeatmapCommand;
+import org.example.commands.Quotes.GuessQuote;
+import org.example.commands.Quotes.QuoteCommand;
 import org.example.commands.StoryMode.PlayCommand;
 import org.example.commands.StoryMode.Saving.StoryResetCommand;
 import org.example.commands.roasts.RoastCommand;
@@ -49,6 +51,7 @@ public class MyBot extends ListenerAdapter {
                         new StoryResetCommand(),
                         new GayCommand(),
                         new PurgeCommand(),
+                        new GuessQuote(),
 
                         // WAVELENGTH COMMANDS
                         new Wavelength2Players(wavelengthManager),
@@ -69,6 +72,7 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("countdown", "Zeigt, wie viele Tage bis Weihnachten übrig sind"),
                 Commands.slash("invite", "Zeigt den Invite-Link für den Bot"),
                 Commands.slash("quote", "Holt ein zufälliges Zitat aus dem Quotes-Channel"),
+                Commands.slash("guessquote", "Von wem stammt dieser Quote?"),
                 Commands.slash("würfel", "Wirft einen würfel mit einer selbstbestimmten seitenzahl")
                         .addOption(OptionType.INTEGER, "sides", "Würfel Seiten", true),
                 Commands.slash("coinflip", "Wirf eine Münze für schwierige entscheidungen"),
