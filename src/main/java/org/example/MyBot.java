@@ -52,6 +52,9 @@ public class MyBot extends ListenerAdapter {
                         new GayCommand(),
                         new PurgeCommand(),
                         new GuessQuote(),
+                        new VoiceNotifyListener(),
+                        new StartupMessageExporter(),
+                        new StartupChannelAnalyzer(),
 
                         // WAVELENGTH COMMANDS
                         new Wavelength2Players(wavelengthManager),
@@ -65,6 +68,7 @@ public class MyBot extends ListenerAdapter {
                 )
                 .build()
                 .awaitReady();
+
 
         jda.updateCommands().addCommands(
                 Commands.slash("wichteln", "Wähle bis zu 4 Personen für den Wichtel"),
