@@ -1,4 +1,4 @@
-package org.example.commands.wavelength;
+/*ackage org.example.commands.Minigames.wavelength;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -6,17 +6,17 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Wavelength2Players extends ListenerAdapter {
+public class Wavelength4PlayersTeams extends ListenerAdapter {
 
 	private final WavelengthSessionManager sessionManager;
 
-	public Wavelength2Players(WavelengthSessionManager sessionManager) {
+	public Wavelength4PlayersTeams(WavelengthSessionManager sessionManager) {
 		this.sessionManager = sessionManager;
 	}
 
 	@Override
 	public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-		if (!event.getName().equals("wavelength2players")) return;
+		if (!event.getName().equals("wavelength4playersteams")) return;
 
 		String channelId = event.getChannel().getId();
 
@@ -29,17 +29,16 @@ public class Wavelength2Players extends ListenerAdapter {
 		// Neue Session erstellen
 		WavelengthSession session = sessionManager.createSession(
 				channelId,
-				WavelengthSession.Mode.TWO_PLAYERS
+				WavelengthSession.Mode.FOUR_PLAYERS_TEAMS
 		);
 
 		event.reply(
-				"🎮 **Wavelength – 2 Spieler**\n\n" +
-						"Es werden **2 Spieler** benötigt.\n" +
+				"🎮 **Wavelength – 4 Spieler (2v2 Teams)**\n\n" +
+						"Es werden **4 Spieler** benötigt.\n" +
 						"Schreibt **`join`** in den Chat, um mitzuspielen.\n\n" +
-						"⏳ Das Spiel startet automatisch, sobald 2 Spieler beigetreten sind."
+						"⏳ Das Spiel startet automatisch, sobald 4 Spieler beigetreten sind."
 		).queue();
 
-		// Spieler sammeln
 		collectPlayers(event, session);
 	}
 
@@ -74,13 +73,31 @@ public class Wavelength2Players extends ListenerAdapter {
 
 				e.getChannel().sendMessage("✅ <@" + userId + "> ist beigetreten!").queue();
 
-				// Wenn 2 Spieler da sind → Spiel starten
-				if (joinedPlayers.size() == 2) {
+				// Wenn 4 Spieler da sind → Spiel starten
+				if (joinedPlayers.size() == 4) {
 					channel.getJDA().removeEventListener(this);
+					assignTeams(session, e);
 					startGame(session, e);
 				}
 			}
 		});
+	}
+
+	private void assignTeams(WavelengthSession session, net.dv8tion.jda.api.events.message.MessageReceivedEvent event) {
+		var players = session.getPlayers();
+
+		// Team A: Spieler 1 + Spieler 3
+		session.addTeamMember(players.get(0), "Team A");
+		session.addTeamMember(players.get(2), "Team A");
+
+		// Team B: Spieler 2 + Spieler 4
+		session.addTeamMember(players.get(1), "Team B");
+		session.addTeamMember(players.get(3), "Team B");
+
+		event.getChannel().sendMessage(
+				"🔵 **Team A:** <@" + players.get(0) + ">, <@" + players.get(2) + ">\n" +
+						"🔴 **Team B:** <@" + players.get(1) + ">, <@" + players.get(3) + ">"
+		).queue();
 	}
 
 	private void startGame(WavelengthSession session, net.dv8tion.jda.api.events.message.MessageReceivedEvent event) {
@@ -90,9 +107,7 @@ public class Wavelength2Players extends ListenerAdapter {
 
 		channel.sendMessage(
 				"🎉 **Das Spiel beginnt!**\n\n" +
-						"Spieler:\n" +
-						"1️⃣ <@" + session.getPlayers().get(0) + ">\n" +
-						"2️⃣ <@" + session.getPlayers().get(1) + ">\n\n" +
+						"Teams wurden automatisch zugewiesen.\n" +
 						"Die erste Runde startet jetzt!"
 		).queue();
 
@@ -125,4 +140,4 @@ public class Wavelength2Players extends ListenerAdapter {
 
 		session.setWaitingForGuess(true);
 	}
-}
+}*/

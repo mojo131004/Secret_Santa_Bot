@@ -9,6 +9,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.example.commands.*;
 import org.example.commands.MessageCounter.ActivityHeatmapCommand;
+import org.example.commands.Minigames.CoinFlipCommand;
+import org.example.commands.Minigames.GuessNumberCommand;
+import org.example.commands.Minigames.wordchain.WordChainCommand;
 import org.example.commands.Quotes.GuessQuote;
 import org.example.commands.Quotes.QuoteCommand;
 import org.example.commands.StoryMode.PlayCommand;
@@ -17,7 +20,7 @@ import org.example.commands.roasts.RoastCommand;
 import org.example.commands.roasts.RoastService;
 
 // WAVELENGTH IMPORTS
-import org.example.commands.wavelength.*;
+import org.example.commands.Minigames.wavelength.*;
 
 public class MyBot extends ListenerAdapter {
 
@@ -26,9 +29,23 @@ public class MyBot extends ListenerAdapter {
 
         RoastService roastService = new RoastService();
 
-        // WAVELENGTH MANAGER
+        // -----------------------------
+        // WAVELENGTH INITIALISIERUNG
+        // -----------------------------
         WavelengthSessionManager wavelengthManager = new WavelengthSessionManager();
 
+        // Haupt-Handler für 2 Spieler
+        Wavelength2Players wavelength2Players = new Wavelength2Players(wavelengthManager);
+
+        // Stop-Command braucht den Handler, damit endGame() aufgerufen werden kann
+        WavelengthStop wavelengthStop = new WavelengthStop(wavelengthManager, wavelength2Players);
+
+        // Listener für Guessing / Nachrichten
+        WavelengthMessageListener wavelengthMessageListener = new WavelengthMessageListener(wavelengthManager);
+
+        // -----------------------------
+        // JDA BUILDER
+        // -----------------------------
         JDA jda = JDABuilder.createDefault(token,
                         GatewayIntent.GUILD_MESSAGES,
                         GatewayIntent.GUILD_MEMBERS,
@@ -53,23 +70,22 @@ public class MyBot extends ListenerAdapter {
                         new PurgeCommand(),
                         new GuessQuote(),
                         new VoiceNotifyListener(),
-                        new StartupMessageExporter(),
-                        new StartupChannelAnalyzer(),
+                        new WordChainCommand(),
 
-                        // WAVELENGTH COMMANDS
-                        new Wavelength2Players(wavelengthManager),
-                        new Wavelength3Players(wavelengthManager),
-                        new Wavelength4Players(wavelengthManager),
-                        new Wavelength4PlayersTeams(wavelengthManager),
-                        new WavelengthStop(wavelengthManager),
-
+                        // -----------------------------
                         // WAVELENGTH LISTENER
-                        new WavelengthMessageListener(wavelengthManager)
+                        // -----------------------------
+                        wavelength2Players,
+                        wavelengthStop,
+                        wavelengthMessageListener
                 )
                 .build()
                 .awaitReady();
 
 
+        // -----------------------------
+        // SLASH COMMANDS
+        // -----------------------------
         jda.updateCommands().addCommands(
                 Commands.slash("wichteln", "Wähle bis zu 4 Personen für den Wichtel"),
                 Commands.slash("ping", "Antwortet mit der Latenz"),
@@ -98,12 +114,14 @@ public class MyBot extends ListenerAdapter {
                 Commands.slash("gemeinimeini", "Wie sehr bist du ein Gemeini meini?")
                         .addOption(OptionType.USER, "user", "Wen willst du testen?", false),
 
+                // -----------------------------
                 // WAVELENGTH COMMANDS
+                // -----------------------------
                 Commands.slash("wavelength2players", "Starte Wavelength mit 2 Spielern"),
                 Commands.slash("wavelength3players", "Starte Wavelength mit 3 Spielern"),
                 Commands.slash("wavelength4players", "Starte Wavelength mit 4 Spielern (Free For All)"),
                 Commands.slash("wavelength4playersteams", "Starte Wavelength mit 4 Spielern (2v2 Teams)"),
                 Commands.slash("wavelengthstop", "Bricht das aktuelle Wavelength-Spiel ab")
-                ).queue();
+        ).queue();
     }
 }
