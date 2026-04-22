@@ -42,8 +42,10 @@ public class BestListManager {
         List<ScoreEntry> list = load();
         list.add(entry);
 
+        // 🔥 Sortierung bleibt nach Punkte pro Runde
         list.sort((a, b) -> Double.compare(b.getPointsPerRound(), a.getPointsPerRound()));
 
+        // Optional: Top 5 behalten
         if (list.size() > 5) {
             list = list.subList(0, 5);
         }
@@ -51,7 +53,7 @@ public class BestListManager {
         save(list);
     }
 
-    // 🔥 NEU: Bestlist formatieren
+    // 🔥 NEU: Bestlist formatieren mit Punkten & Runden
     public static String formatBestList() {
         List<ScoreEntry> list = load();
 
@@ -68,9 +70,17 @@ public class BestListManager {
                     .append(entry.getPlayer1())
                     .append("> & <@")
                     .append(entry.getPlayer2())
-                    .append("> — Ø **")
+                    .append(">\n")
+                    .append("   ➤ Punkte: **")
+                    .append(entry.getPoints())
+                    .append("**, Runden: **")
+                    .append(entry.getRounds())
+                    .append("**, Ø **")
                     .append(String.format("%.2f", entry.getPointsPerRound()))
-                    .append("** Punkte pro Runde\n");
+                    .append("** Punkte/Runde\n")
+                    .append("   📅 ")
+                    .append(entry.getDate())
+                    .append("\n\n");
         }
 
         return sb.toString();

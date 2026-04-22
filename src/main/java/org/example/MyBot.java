@@ -71,6 +71,7 @@ public class MyBot extends ListenerAdapter {
                         new GuessQuote(),
                         new VoiceNotifyListener(),
                         new WordChainCommand(),
+                        new WavelengthBestList(),
 
                         // -----------------------------
                         // WAVELENGTH LISTENER
@@ -117,11 +118,13 @@ public class MyBot extends ListenerAdapter {
                 // -----------------------------
                 // WAVELENGTH COMMANDS
                 // -----------------------------
-                Commands.slash("wavelength2players", "Starte Wavelength mit 2 Spielern"),
-                Commands.slash("wavelength3players", "Starte Wavelength mit 3 Spielern"),
-                Commands.slash("wavelength4players", "Starte Wavelength mit 4 Spielern (Free For All)"),
-                Commands.slash("wavelength4playersteams", "Starte Wavelength mit 4 Spielern (2v2 Teams)"),
-                Commands.slash("wavelengthstop", "Bricht das aktuelle Wavelength-Spiel ab")
-        ).queue();
+               Commands.slash("wavelength2players", "Starte Wavelength mit 2 Spielern"),
+//                Commands.slash("wavelength3players", "Starte Wavelength mit 3 Spielern"),
+//                Commands.slash("wavelength4players", "Starte Wavelength mit 4 Spielern (Free For All)"),
+//                Commands.slash("wavelength4playersteams", "Starte Wavelength mit 4 Spielern (2v2 Teams)"),
+                Commands.slash("wavelengthstop", "Bricht das aktuelle Wavelength-Spiel ab"),
+                Commands.slash("wavelengthbestlist", "Zeigt die Wavelength‑Bestlist an")
+
+                ).queue();
     }
 }

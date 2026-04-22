@@ -25,40 +25,26 @@ public class WavelengthMessageListener extends ListenerAdapter {
 		if (!session.isGameStarted()) return;
 
 		String userId = event.getAuthor().getId();
+		String content = event.getMessage().getContentRaw().trim();
 
-		// 1️⃣ Hinweisphase
-		if (session.isWaitingForHint() && userId.equals(session.getCurrentDescriber())) {
-
-			session.setWaitingForHint(false);
-			session.setWaitingForGuess(true);
-
-			event.getChannel().sendMessage(
-					"📝 Hinweis erhalten!\n" +
-							"👉 <@" + session.getCurrentGuesser() + "> gib jetzt eine Zahl zwischen **1 und 10** ein."
-			).queue();
-
-			return;
-		}
-
-		// 2️⃣ Guessphase
+		// ❗ Nur Guess-Phase existiert noch
 		if (!session.isWaitingForGuess()) return;
 
 		if (!userId.equals(session.getCurrentGuesser())) {
-			event.getChannel().sendMessage("❌ Nur <@" + session.getCurrentGuesser() + "> darf jetzt raten.").queue();
+			event.getChannel().sendMessage("❌ Nur <@" + session.getCurrentGuesser() + "> darf raten.").queue();
 			return;
 		}
 
-		String content = event.getMessage().getContentRaw().trim();
-
-		int guess;
-		try {
-			guess = Integer.parseInt(content);
-		} catch (NumberFormatException e) {
+		// ✅ Nur Zahlen erlauben
+		if (!content.matches("\\d+")) {
+			event.getChannel().sendMessage("❌ Bitte gib **nur eine Zahl** ein.").queue();
 			return;
 		}
+
+		int guess = Integer.parseInt(content);
 
 		if (guess < 1 || guess > 10) {
-			event.getChannel().sendMessage("❌ Bitte gib eine Zahl zwischen **1 und 10** ein.").queue();
+			event.getChannel().sendMessage("❌ Zahl muss zwischen **1 und 10** sein.").queue();
 			return;
 		}
 
@@ -92,8 +78,8 @@ public class WavelengthMessageListener extends ListenerAdapter {
 		String topic = WavelengthTopics.getRandomTopic();
 		session.setTopic(topic);
 
-		session.setWaitingForHint(true);
-		session.setWaitingForGuess(false);
+		// ✅ DIREKT GUESS-PHASE
+		session.setWaitingForGuess(true);
 
 		event.getJDA().retrieveUserById(session.getCurrentDescriber()).queue(user ->
 				user.openPrivateChannel().queue(dm ->
@@ -106,7 +92,8 @@ public class WavelengthMessageListener extends ListenerAdapter {
 						"Beschreiber: <@" + session.getCurrentDescriber() + ">\n" +
 						"Guesser: <@" + session.getCurrentGuesser() + ">\n" +
 						"Thema: **" + topic + "**\n\n" +
-						"👉 <@" + session.getCurrentDescriber() + "> gib jetzt deinen Hinweis ein!"
+						"🎙️ Hinweis erfolgt im Voice!\n" +
+						"👉 <@" + session.getCurrentGuesser() + "> gib jetzt eine Zahl ein!"
 		).queue();
 	}
 }

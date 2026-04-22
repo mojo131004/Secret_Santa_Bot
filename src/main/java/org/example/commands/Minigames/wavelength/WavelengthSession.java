@@ -1,5 +1,7 @@
 package org.example.commands.Minigames.wavelength;
 
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.util.*;
 
 public class WavelengthSession {
@@ -20,8 +22,8 @@ public class WavelengthSession {
 
 	private int roundsPlayed = 0;
 
-	// Listener für Join-Phase
-	private Object joinListener;
+	// ✅ FIX: richtiger Typ statt Object
+	private ListenerAdapter joinListener;
 
 	// Phasensteuerung
 	private boolean waitingForHint = false;
@@ -32,94 +34,49 @@ public class WavelengthSession {
 		this.mode = mode;
 	}
 
-	public String getChannelId() {
-		return channelId;
-	}
-
-	public Mode getMode() {
-		return mode;
-	}
-
-	public List<String> getPlayers() {
-		return players;
-	}
+	public String getChannelId() { return channelId; }
+	public Mode getMode() { return mode; }
+	public List<String> getPlayers() { return players; }
 
 	public void addPlayer(String userId) {
 		players.add(userId);
 		scores.put(userId, 0);
 	}
 
-	public Map<String, Integer> getScores() {
-		return scores;
-	}
+	public Map<String, Integer> getScores() { return scores; }
 
 	public void addPoints(String userId, int points) {
 		scores.put(userId, scores.getOrDefault(userId, 0) + points);
 	}
 
-	public int getRoundsPlayed() {
-		return roundsPlayed;
-	}
+	public int getRoundsPlayed() { return roundsPlayed; }
+	public void incrementRounds() { roundsPlayed++; }
 
-	public void incrementRounds() {
-		roundsPlayed++;
-	}
+	public void setSecretNumber(int number) { this.secretNumber = number; }
+	public int getSecretNumber() { return secretNumber; }
 
-	public void setSecretNumber(int number) {
-		this.secretNumber = number;
-	}
+	public void setTopic(String topic) { this.topic = topic; }
+	public String getTopic() { return topic; }
 
-	public int getSecretNumber() {
-		return secretNumber;
-	}
+	public boolean isGameStarted() { return gameStarted; }
+	public void setGameStarted(boolean started) { this.gameStarted = started; }
 
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
+	public String getCurrentDescriber() { return players.get(0); }
+	public String getCurrentGuesser() { return players.get(1); }
 
-	public String getTopic() {
-		return topic;
-	}
-
-	public boolean isGameStarted() {
-		return gameStarted;
-	}
-
-	public void setGameStarted(boolean started) {
-		this.gameStarted = started;
-	}
-
-	public String getCurrentDescriber() {
-		return players.get(0);
-	}
-
-	public String getCurrentGuesser() {
-		return players.get(1);
-	}
-
-	public void setJoinListener(Object listener) {
+	// ✅ FIX: sauberer Listener
+	public void setJoinListener(ListenerAdapter listener) {
 		this.joinListener = listener;
 	}
 
-	public Object getJoinListener() {
+	public ListenerAdapter getJoinListener() {
 		return joinListener;
 	}
 
-	// Hinweisphase
-	public boolean isWaitingForHint() {
-		return waitingForHint;
-	}
+	// Phasen
+	public boolean isWaitingForHint() { return waitingForHint; }
+	public void setWaitingForHint(boolean waitingForHint) { this.waitingForHint = waitingForHint; }
 
-	public void setWaitingForHint(boolean waitingForHint) {
-		this.waitingForHint = waitingForHint;
-	}
-
-	// Guessphase
-	public boolean isWaitingForGuess() {
-		return waitingForGuess;
-	}
-
-	public void setWaitingForGuess(boolean waitingForGuess) {
-		this.waitingForGuess = waitingForGuess;
-	}
+	public boolean isWaitingForGuess() { return waitingForGuess; }
+	public void setWaitingForGuess(boolean waitingForGuess) { this.waitingForGuess = waitingForGuess; }
 }

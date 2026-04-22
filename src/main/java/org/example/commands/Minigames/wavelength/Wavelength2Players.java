@@ -2,8 +2,8 @@ package org.example.commands.Minigames.wavelength;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -66,8 +66,9 @@ public class Wavelength2Players extends ListenerAdapter {
 				e.getChannel().sendMessage("✅ <@" + userId + "> ist beigetreten!").queue();
 
 				if (joinedPlayers.size() == 2) {
-					// 🔥 WICHTIG: Listener korrekt entfernen
-					event.getJDA().removeEventListener(this);
+
+					// ✅ richtiger Listener wird entfernt
+					e.getJDA().removeEventListener(session.getJoinListener());
 
 					startGame(session, e);
 				}
@@ -75,8 +76,6 @@ public class Wavelength2Players extends ListenerAdapter {
 		};
 
 		session.setJoinListener(joinListener);
-
-		// 🔥 WICHTIG: Listener korrekt registrieren
 		event.getJDA().addEventListener(joinListener);
 	}
 
@@ -101,8 +100,12 @@ public class Wavelength2Players extends ListenerAdapter {
 		String topic = WavelengthTopics.getRandomTopic();
 		session.setTopic(topic);
 
-		session.setWaitingForHint(true);
-		session.setWaitingForGuess(false);
+		// ❌ ALT
+		// session.setWaitingForHint(true);
+		// session.setWaitingForGuess(false);
+
+		// ✅ NEU
+		session.setWaitingForGuess(true);
 
 		event.getJDA().retrieveUserById(session.getCurrentDescriber()).queue(user ->
 				user.openPrivateChannel().queue(dm ->
@@ -114,11 +117,11 @@ public class Wavelength2Players extends ListenerAdapter {
 				"🧠 **Neue Runde!**\n" +
 						"Beschreiber: <@" + session.getCurrentDescriber() + ">\n" +
 						"Guesser: <@" + session.getCurrentGuesser() + ">\n" +
-						"Thema: **" + topic + "**\n\n" +
-						"👉 <@" + session.getCurrentDescriber() + "> gib jetzt deinen Hinweis ein!"
+						"Thema: **" + topic + "**\n\n"
 		).queue();
 	}
 
+	// ✅ HIER IST DEINE ENDGAME METHODE
 	public void endGame(WavelengthSession session, GuildMessageChannel channel) {
 
 		if (session.getPlayers().size() < 2) {
