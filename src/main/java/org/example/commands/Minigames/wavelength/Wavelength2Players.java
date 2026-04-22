@@ -66,14 +66,18 @@ public class Wavelength2Players extends ListenerAdapter {
 				e.getChannel().sendMessage("✅ <@" + userId + "> ist beigetreten!").queue();
 
 				if (joinedPlayers.size() == 2) {
+					// 🔥 WICHTIG: Listener korrekt entfernen
 					event.getJDA().removeEventListener(this);
+
 					startGame(session, e);
 				}
 			}
 		};
 
 		session.setJoinListener(joinListener);
-		event.getJDA().addEventListener(joinListener); // 🔥 FIX
+
+		// 🔥 WICHTIG: Listener korrekt registrieren
+		event.getJDA().addEventListener(joinListener);
 	}
 
 	private void startGame(WavelengthSession session, MessageReceivedEvent event) {
